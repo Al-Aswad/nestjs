@@ -18,7 +18,11 @@ export class KelasService {
   }
 
   findAll() {
-    return this.kelasRepository.find({ relations: ['siswa'] });
+    return this.kelasRepository.find({
+      relations: {
+        siswa: true,
+      },
+    });
   }
 
   findOne(id: string) {

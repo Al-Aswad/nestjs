@@ -17,7 +17,11 @@ export class SiswaService {
   }
 
   findAll() {
-    return this.siswaRepository.find();
+    return this.siswaRepository.find({
+      relations: {
+        kelas: true,
+      },
+    });
   }
 
   findOne(id: string) {

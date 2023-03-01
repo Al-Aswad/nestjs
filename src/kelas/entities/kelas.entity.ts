@@ -1,5 +1,11 @@
 import { Siswa } from 'src/siswa/entities/siswa.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Kelas {
@@ -12,6 +18,7 @@ export class Kelas {
   @Column()
   waliKelas: string;
 
-  @ManyToOne(() => Siswa, (siswa) => siswa.kelas_id)
+  @OneToMany(() => Siswa, (siswa) => siswa.kelas)
+  @JoinColumn({ name: 'kelas_id', referencedColumnName: 'id' })
   siswa: Siswa[];
 }
