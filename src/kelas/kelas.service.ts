@@ -26,7 +26,14 @@ export class KelasService {
   }
 
   findOne(id: string) {
-    return this.kelasRepository.findOneBy({ id });
+    return this.kelasRepository.findOne({
+      where: {
+        id,
+      },
+      relations: {
+        siswa: true,
+      },
+    });
   }
 
   update(id: string, updateKelaDto: UpdateKelasDto) {
