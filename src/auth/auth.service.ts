@@ -46,6 +46,7 @@ export class AuthService {
   async createAccessToken(siswa: Siswa): Promise<string> {
     const payload = {
       sub: siswa.id,
+      roles: ['user'],
     };
     const access_token = await this.jwtService.signAsync(payload);
     return access_token;

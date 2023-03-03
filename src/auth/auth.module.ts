@@ -6,11 +6,16 @@ import { SiswaService } from 'src/siswa/siswa.service';
 import { SiswaModule } from 'src/siswa/siswa.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Siswa } from 'src/siswa/entities/siswa.entity';
+import { jwtConstants } from 'src/config/jwt.config';
+import { JwtAuthGuard } from './guards/jwt.guard';
+import { RolesGuard } from './guards/role.guard';
+import { JwtStrategy } from './jwt.strategy';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
     JwtModule.register({
-      secret: 'secret',
+      secret: jwtConstants.secret,
       signOptions: {
         expiresIn: 60,
       },
@@ -19,7 +24,7 @@ import { Siswa } from 'src/siswa/entities/siswa.entity';
     SiswaModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, SiswaService],
+  providers: [AuthService, SiswaService, JwtStrategy],
   exports: [AuthService],
 })
 export class AuthModule {}
