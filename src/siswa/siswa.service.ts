@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as bcrypt from 'bcrypt';
+import { AuthService } from 'src/auth/auth.service';
 import { Repository } from 'typeorm';
 import { CreateSiswaDto } from './dto/create-siswa.dto';
 import { UpdateSiswaDto } from './dto/update-siswa.dto';
@@ -12,7 +14,8 @@ export class SiswaService {
     private siswaRepository: Repository<Siswa>,
   ) {}
 
-  create(createSiswaDto: CreateSiswaDto) {
+  async create(createSiswaDto: CreateSiswaDto) {
+    createSiswaDto.password = await this.hashPassword(createSiswaDto.password);
     return this.siswaRepository.save(createSiswaDto);
   }
 
@@ -41,6 +44,10 @@ export class SiswaService {
 
   remove(id: string) {
     return this.siswaRepository.delete(id);
+  }
+
+  async hashPassword(password: string): Promise<string> {
+    return await bcrypt.hash(password, 10);
   }
 
   async validateUser(email: string): Promise<any> {
