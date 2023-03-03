@@ -42,4 +42,18 @@ export class SiswaService {
   remove(id: string) {
     return this.siswaRepository.delete(id);
   }
+
+  async validateUser(email: string): Promise<any> {
+    const user = await this.siswaRepository.findOne({
+      where: {
+        email,
+      },
+    });
+
+    if (user) {
+      return user;
+    }
+
+    return null;
+  }
 }

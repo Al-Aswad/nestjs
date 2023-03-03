@@ -19,6 +19,12 @@ export class Siswa {
   name: string;
 
   @Column()
+  email: string;
+
+  @Column()
+  password: string;
+
+  @Column()
   alamat: string;
 
   @Column()
