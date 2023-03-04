@@ -12,7 +12,6 @@ import { CreateSiswaDto } from './dto/create-siswa.dto';
 import { UpdateSiswaDto } from './dto/update-siswa.dto';
 import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/interfaces/role';
-import { Public } from 'src/auth/public.decorator';
 
 @Controller('siswa')
 export class SiswaController {
@@ -25,12 +24,10 @@ export class SiswaController {
   }
 
   @Get()
-  @Public()
   findAll() {
     return this.siswaService.findAll();
   }
 
-  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.siswaService.findOne(id);
