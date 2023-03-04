@@ -10,7 +10,6 @@ import {
 import { KelasService } from './kelas.service';
 import { CreateKelasDto } from './dto/create-kelas.dto';
 import { UpdateKelasDto } from './dto/update-kelas.dto';
-import { Public } from 'src/auth/public.decorator';
 import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/interfaces/role';
 
@@ -26,12 +25,10 @@ export class KelasController {
   }
 
   @Get()
-  @Public()
   findAll() {
     return this.kelasService.findAll();
   }
 
-  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.kelasService.findOne(id);
