@@ -8,16 +8,14 @@ import { Role } from 'src/auth/interfaces/role';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
-  // @Public()
   @Roles(Role.Admin)
+  @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
 
-  @Get()
-  // @UseGuards(RolesGuard)
   @Roles(Role.Admin)
+  @Get()
   findAll() {
     return this.usersService.findAll();
   }

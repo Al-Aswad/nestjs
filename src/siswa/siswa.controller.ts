@@ -30,6 +30,7 @@ export class SiswaController {
     return this.siswaService.findAll();
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.siswaService.findOne(id);
