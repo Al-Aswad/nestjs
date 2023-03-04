@@ -12,21 +12,20 @@ export class KelasService {
     private kelasRepository: Repository<Kelas>,
   ) {}
 
-  create(createKelasDto: CreateKelasDto) {
-    console.log(createKelasDto);
-    return this.kelasRepository.save(createKelasDto);
+  async create(createKelasDto: CreateKelasDto) {
+    return await this.kelasRepository.save(createKelasDto);
   }
 
-  findAll() {
-    return this.kelasRepository.find({
+  async findAll() {
+    return await this.kelasRepository.find({
       relations: {
         siswa: true,
       },
     });
   }
 
-  findOne(id: string) {
-    return this.kelasRepository.findOne({
+  async findOne(id: string) {
+    return await this.kelasRepository.findOne({
       where: {
         id,
       },
@@ -36,11 +35,15 @@ export class KelasService {
     });
   }
 
-  update(id: string, updateKelaDto: UpdateKelasDto) {
-    return this.kelasRepository.update(id, updateKelaDto);
+  async update(id: string, updateKelaDto: UpdateKelasDto) {
+    return await this.kelasRepository.update(id, updateKelaDto);
   }
 
-  remove(id: string) {
-    return this.kelasRepository.delete(id);
+  async remove(id: string) {
+    try {
+      return await this.kelasRepository.delete(id);
+    } catch (error) {
+      return 'cannot delete this kelas';
+    }
   }
 }

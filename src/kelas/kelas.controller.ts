@@ -31,13 +31,13 @@ export class KelasController {
     return this.kelasService.findAll();
   }
 
-  @Roles(Role.Admin)
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.kelasService.findOne(id);
   }
 
-  @Public()
+  @Roles(Role.Admin)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateKelaDto: UpdateKelasDto) {
     return this.kelasService.update(id, updateKelaDto);
