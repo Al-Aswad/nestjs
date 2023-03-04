@@ -1,9 +1,9 @@
 export class CreateKelasDto {
   name: string;
-  waliKelas: string;
+  wali_kelas: string;
 
-  constructor(name: string, waliKelas: string) {
+  constructor(name: string, wali_kelas: string) {
     this.name = name;
-    this.waliKelas = waliKelas;
+    this.wali_kelas = wali_kelas;
   }
 }

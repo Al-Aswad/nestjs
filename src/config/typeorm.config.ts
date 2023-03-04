@@ -1,13 +1,7 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { dataSourceOptions } from 'src/db/data.source';
 
-export const typecon: TypeOrmModule = {
-  type: 'mysql',
-  host: 'localhost',
-  port: 3306,
-  username: 'root',
-  password: 'root',
-  database: 'sekolah',
-  entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-  synchronize: true,
+export const typeconf: TypeOrmModule = {
+  ...dataSourceOptions,
   autoLoadEntities: true,
 };

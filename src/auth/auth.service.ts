@@ -1,36 +1,35 @@
 import {
-  Inject,
   Injectable,
   InternalServerErrorException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { KelasService } from 'src/kelas/kelas.service';
-import { Siswa } from 'src/siswa/entities/siswa.entity';
-import { SiswaService } from 'src/siswa/siswa.service';
 import { NotFoundException } from '@nestjs/common';
 import { TokenExpiredError } from 'jsonwebtoken';
 
 import { LoginDto } from './dto/login-auth.dto';
+import { UsersService } from 'src/users/users.service';
+import { Users } from 'src/users/entities/users.entity';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly siswaService: SiswaService,
+    private readonly userService: UsersService,
   ) {}
 
   async login(LoginDto: LoginDto) {
-    const siswa = await this.siswaService.validateUser(LoginDto.email);
+    const user = await this.userService.validateUser(LoginDto.email);
 
-    if (!siswa) {
+    console.log(user);
+    if (!user) {
       throw new NotFoundException('user not found');
     }
 
-    if (await this.validatePassword(LoginDto.password, siswa.password)) {
+    if (await this.validatePassword(LoginDto.password, user.password)) {
       return {
-        access_token: await this.createAccessToken(await siswa),
+        access_token: await this.createAccessToken(await user),
       };
     }
 
@@ -39,14 +38,14 @@ export class AuthService {
 
   async me(token: string) {
     const decoded = await this.decodeToken(token);
-    const siswa = await this.siswaService.findOne(decoded.sub);
-    return siswa;
+    const user = await this.userService.findOne(decoded.sub);
+    return user;
   }
 
-  async createAccessToken(siswa: Siswa): Promise<string> {
+  async createAccessToken(user: Users): Promise<string> {
     const payload = {
-      sub: siswa.id,
-      roles: ['user'],
+      sub: user.id,
+      roles: [user.role.name],
     };
     const access_token = await this.jwtService.signAsync(payload);
     return access_token;

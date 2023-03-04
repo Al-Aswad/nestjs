@@ -1,9 +1,9 @@
 export class UpdateKelasDto {
-  namaKelas: string;
-  waliKelas: string;
+  nama_kelas: string;
+  wali_kelas: string;
 
-  constructor(namaKelas: string, waliKelas: string) {
-    this.namaKelas = namaKelas;
-    this.waliKelas = waliKelas;
+  constructor(nama_kelas: string, wali_kelas: string) {
+    this.nama_kelas = nama_kelas;
+    this.wali_kelas = wali_kelas;
   }
 }

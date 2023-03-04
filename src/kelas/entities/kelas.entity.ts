@@ -16,7 +16,7 @@ export class Kelas {
   name: string;
 
   @Column()
-  waliKelas: string;
+  wali_kelas: string;
 
   @OneToMany(() => Siswa, (siswa) => siswa.kelas)
   @JoinColumn({ name: 'kelas_id', referencedColumnName: 'id' })

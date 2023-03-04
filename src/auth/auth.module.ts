@@ -2,15 +2,13 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { SiswaService } from 'src/siswa/siswa.service';
-import { SiswaModule } from 'src/siswa/siswa.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Siswa } from 'src/siswa/entities/siswa.entity';
 import { jwtConstants } from 'src/config/jwt.config';
-import { JwtAuthGuard } from './guards/jwt.guard';
-import { RolesGuard } from './guards/role.guard';
 import { JwtStrategy } from './jwt.strategy';
-import { PassportModule } from '@nestjs/passport';
+import { UsersModule } from 'src/users/users.module';
+import { UsersService } from 'src/users/users.service';
+import { Users } from 'src/users/entities/users.entity';
+import { Role } from 'src/role/entities/role.entity';
 
 @Module({
   imports: [
@@ -20,11 +18,11 @@ import { PassportModule } from '@nestjs/passport';
         expiresIn: 60,
       },
     }),
-    TypeOrmModule.forFeature([Siswa]),
-    SiswaModule,
+    TypeOrmModule.forFeature([Users, Role]),
+    UsersModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, SiswaService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, UsersService],
   exports: [AuthService],
 })
 export class AuthModule {}
